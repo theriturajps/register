@@ -4,10 +4,11 @@ function getDomainsList(filesPath) {
     var files = glob.apply(null, [filesPath, true, ".json"]);
 
     for (var i = 0; i < files.length; i++) {
-        // Skip template file
-        if (files[i].endsWith("TEMPLATE.json")) continue;
+        // Skip template file if it exists
+        var fileName = files[i].split("/").pop();
+        if (fileName === "TEMPLATE.json") continue;
 
-        var name = files[i].split("/").pop().replace(/\.json$/, "");
+        var name = fileName.replace(/\.json$/, "");
         try {
             result.push({ name: name, data: require(files[i]) });
         } catch (e) {
