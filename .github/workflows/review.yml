@@ -1,0 +1,88 @@
+name: Review Guidelines
+
+on:
+  pull_request_target:
+    paths:
+      - 'domains/*.json'
+
+jobs:
+  review:
+    name: Review Subdomain Request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check Domain Limit Per User
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Get changed files in PR
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            // Filter new JSON files in domains directory
+            const newDomainFiles = files.filter(file => 
+              file.status === 'added' && 
+              file.filename.startsWith('domains/') && 
+              file.filename.endsWith('.json')
+            );
+            
+            if (newDomainFiles.length === 0) {
+              console.log('No new domain files found.');
+              return;
+            }
+            
+            // Read all existing domains
+            const domainsDir = path.join(process.cwd(), 'domains');
+            const existingFiles = fs.readdirSync(domainsDir)
+              .filter(file => file.endsWith('.json') && file !== 'TEMPLATE.json');
+            
+            // Get PR author
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            const prAuthor = pr.user.login;
+            
+            // Count existing domains for this user
+            let userDomainCount = 0;
+            let userDomains = [];
+            
+            for (const file of existingFiles) {
+              try {
+                const content = fs.readFileSync(path.join(domainsDir, file), 'utf8');
+                const domain = JSON.parse(content);
+                
+                if (domain.owner && domain.owner.username === prAuthor) {
+                  userDomainCount++;
+                  userDomains.push(file.replace('.json', ''));
+                }
+              } catch (err) {
+                console.error(`Error processing ${file}:`, err);
+              }
+            }
+            
+            // Check if user is under or at limit
+            if (userDomainCount >= 5) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `⚠️ **Limit Reached**: You already own ${userDomainCount} subdomains (${userDomains.join(', ')}). Our policy allows a maximum of 5 subdomains per user.`
+              });
+            } else {
+              const remainingSlots = 5 - userDomainCount;
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Thank you for your subdomain request! ${userDomainCount > 0 ? `You currently have ${userDomainCount} subdomain(s) (${userDomains.join(', ')}) and can register ${remainingSlots} more.` : 'You can register up to 5 subdomains in total.'} Your submission will be reviewed shortly.`
+              });
+            }
