@@ -1,0 +1,15 @@
+{
+    "owner": {
+        "username": "theriturajps",
+        "email": "theriturajps@gmail.com"
+    },
+
+    "target": {
+        "CNAME": {
+            "name": "www",
+            "value": "theriturajps.github.io"
+        }
+    },
+
+    "proxied": false
+}
