@@ -1,0 +1,19 @@
+{
+    "owner": {
+        "username": "theriturajps",
+        "email": "theriturajps@gmail.com"
+    },
+
+    "target": {
+        "CNAME": {
+            "name": "devunboxed",
+            "value": "devunboxed.github.io"
+        },
+        "TXT": {
+            "name": "_github-pages-challenge-DevUnboxed.devunboxed",
+            "value": "eec0fec37b6354396bee7cf72759f8"
+        }
+    },
+
+    "proxied": false
+}
