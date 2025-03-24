@@ -15,33 +15,76 @@
   <meta property="og:description" content="Get a free StarCity subdomain for your projects with ease.">
   <meta property="og:image" content="https://starcity.eu.org/banner.jpg">
   <meta name="twitter:image" content="https://starcity.eu.org/banner.jpg">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <style>
+    body {
+      background-color: #111827;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+    }
+    .domain-container {
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    .typing-container {
+      height: 32px;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white flex flex-col items-center justify-center h-screen text-center p-6">
-  <header>
-    <h1 class="text-4xl font-bold">StarCity</h1>
-    <h2 class="text-lg mt-2 text-gray-400">Get a free subdomain for your website or project</h2>
-  </header>
-  
-  <main class="mt-6">
-    <h3 class="text-2xl font-semibold">
-      <span id="typed" class="text-blue-400"></span>.starcity.eu.org
-    </h3>
-    <p class="mt-3 text-gray-300 max-w-lg">Claim your subdomain in just a few steps. Perfect for blogs, portfolios, APIs, and more!</p>
-    <a href="https://github.com/theriturajps/register/blob/main/CONTRIBUTING.md" target="_blank" class="mt-5 inline-block bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-full text-white font-semibold transition">Get Yours Now</a>
-  </main>
-  
-  <footer class="mt-8 text-sm text-gray-500">
-    <p>Powered by <a href="/" class="text-blue-400 hover:underline">StarCity</a></p>
-  </footer>
+<body class="text-gray-100 min-h-screen flex flex-col justify-center items-center">
+  <div class="w-full max-w-md px-6 py-8">
+    <header class="mb-8">
+      <div class="flex items-center justify-center mb-2">
+        <h1 class="text-2xl font-bold tracking-tight">StarCity</h1>
+      </div>
+      <p class="text-sm text-gray-400 text-center">Professional subdomains, completely free</p>
+    </header>
 
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <div class="domain-container rounded-lg p-5 mb-6 shadow-lg">
+      <div class="flex flex-col items-center justify-center">
+        <div class="typing-container flex items-center justify-center mb-3">
+          <span id="typed" class="text-blue-400 font-mono"></span><span class="text-blue-400 font-mono">.</span><span class="font-mono">starcity.eu.org</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-4 text-center">Launch your project with a memorable web address</p>
+        <a href="https://github.com/theriturajps/register/blob/main/CONTRIBUTING.md" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-sm text-center transition duration-150 ease-in-out transform hover:-translate-y-0.5">
+          Register Your Domain
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="text-center">
+        <div class="text-blue-400 font-medium text-lg">Free</div>
+        <div class="text-gray-400 text-xs mt-1">Forever</div>
+      </div>
+      <div class="text-center">
+        <div class="text-blue-400 font-medium text-lg">Fast</div>
+        <div class="text-gray-400 text-xs mt-1">Setup</div>
+      </div>
+      <div class="text-center">
+        <div class="text-blue-400 font-medium text-lg">Simple</div>
+        <div class="text-gray-400 text-xs mt-1">Process</div>
+      </div>
+    </div>
+    
+    <footer class="text-center text-xs text-gray-500">
+      <p>© 2025 StarCity</p>
+		</footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
   <script>
-    new Typed('#typed', {
-      strings: ["dev", "blog", "api", "portfolio", "yourname"],
-      typeSpeed: 120,
-      loop: true,
-      backSpeed: 50
+    document.addEventListener('DOMContentLoaded', function() {
+      new Typed('#typed', {
+        strings: ["yourname", "project", "api", "blog", "app"],
+        typeSpeed: 80,
+        backSpeed: 40,
+        backDelay: 1800,
+        loop: true,
+        smartBackspace: true
+      });
     });
   </script>
 </body>
